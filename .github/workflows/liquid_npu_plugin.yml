@@ -11,8 +11,8 @@ permissions: read-all
 
 jobs:
   build:
-    runs-on: windows-latest-8-cores
-    timeout-minutes: 300
+    runs-on: windows-latest
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
@@ -37,7 +37,7 @@ jobs:
           -DCMAKE_DISABLE_FIND_PACKAGE_PkgConfig=ON
 
       - name: Build
-        run: cmake --build build --config Release --target openvino_intel_npu_plugin --parallel 8
+        run: cmake --build build --config Release --target openvino_intel_npu_plugin --parallel 4
 
       - name: Collect
         shell: pwsh
