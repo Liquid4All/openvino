@@ -44,7 +44,8 @@ jobs:
         run: |
           New-Item -ItemType Directory out | Out-Null
           # OpenVINO links binaries into bin/ under the source tree, not the build tree.
-          Copy-Item bin/intel64/Release/openvino_intel_npu_plugin.dll, bin/intel64/Release/openvino_intel_npu_plugin.pdb -Destination out
+          Get-ChildItem bin/intel64/Release -Filter '*.dll'
+          Copy-Item bin/intel64/Release/openvino_intel_npu_plugin.dll -Destination out
           git rev-parse HEAD | Out-File out/commit.txt
           Get-ChildItem out
 
@@ -52,3 +53,4 @@ jobs:
         with:
           name: npu-plugin-${{ github.sha }}
           path: out
+          if-no-files-found: error
